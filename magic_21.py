@@ -1,11 +1,17 @@
 import time
+from collections import Counter
 
 def take_twenty_one(deck):
     twenty_one_cerds_deck = deck[:21]
     return twenty_one_cerds_deck
 
-def layer_detact(card):
-    return True
+def liar_detact(card, piles):
+    print(piles)
+    counts = Counter(piles)
+    if counts[card] == 3:
+        return True
+    else:
+        return False
 
 def magic_action(deck, i):
     pile_a = deck[::3]
@@ -48,16 +54,19 @@ def magic_action(deck, i):
         case _:
             print("You ruined the magic.")
     new_list = first_pile + midlle_pile + finel_pile
-    return new_list
+    return new_list , midlle_pile
 
 def twenty_one_magic(deck):
     print("For this magick we need only 21 cards")
     twenty_one_cerds_deck = take_twenty_one(deck)
+    user_piles = []
+
     for i in range(3):
-        twenty_one_cerds_deck = magic_action(twenty_one_cerds_deck, i )
-    if layer_detact(twenty_one_cerds_deck[10]):
+        twenty_one_cerds_deck, chosen_pile = magic_action(twenty_one_cerds_deck, i )
+        user_piles.extend(chosen_pile)
+    if liar_detact(twenty_one_cerds_deck[10], user_piles):
         print("Your card is...")
         time.sleep(3) 
         print(twenty_one_cerds_deck[10])
     else:
-        print("You are Layer")
+        print("You are liar")
