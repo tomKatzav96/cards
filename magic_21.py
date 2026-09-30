@@ -2,11 +2,16 @@ import time
 from collections import Counter
 
 def take_twenty_one(deck):
+    """
+    Take the first 21 cards from the given deck.
+    """
     twenty_one_cerds_deck = deck[:21]
     return twenty_one_cerds_deck
 
 def liar_detact(card, piles):
-    print(piles)
+    """
+    Check if the chosen card appears exactly 3 times in the collected piles.
+    """
     counts = Counter(piles)
     if counts[card] == 3:
         return True
@@ -14,6 +19,10 @@ def liar_detact(card, piles):
         return False
 
 def magic_action(deck, i):
+    """
+    Perform one round of the 21-card trick: split deck into piles,
+    ask the user which pile contains their card, and reorder deck.
+    """
     pile_a = deck[::3]
     pile_b = deck[1::3]
     pile_c = deck[2::3]
@@ -38,7 +47,7 @@ def magic_action(deck, i):
             "C\n"
             "Enter your choice: "
         )
-    match choice:
+    match choice.upper():
         case "A":
             first_pile = pile_b
             midlle_pile = pile_a
@@ -52,11 +61,14 @@ def magic_action(deck, i):
             midlle_pile = pile_c
             finel_pile = pile_b
         case _:
-            print("You ruined the magic.")
+            print("You ruined the magic.") #need to make sure what happend if the user not choos a correct latter
     new_list = first_pile + midlle_pile + finel_pile
     return new_list , midlle_pile
 
 def twenty_one_magic(deck):
+    """
+    Perform the full 21-card trick with liar detection.
+    """
     print("For this magick we need only 21 cards")
     twenty_one_cerds_deck = take_twenty_one(deck)
     user_piles = []
